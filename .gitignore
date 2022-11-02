@@ -1,4 +1,6 @@
 .DS_Store
 .idea/
 tmp/
+blog-laravel/storage/media-library/
+
 

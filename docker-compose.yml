@@ -7,14 +7,14 @@ services:
       - ./blog-laravel:/var/www:delegated
       - ./blog-laravel/_docker/nginx/conf.d:/etc/nginx/conf.d
     labels:
-      - "traefik.http.routers.nginx.rule=Host(`api.app.localhost`)"
+      - "traefik.http.routers.nginx.rule=Host(`api.testdomain.ru`)"
       - "traefik.port=80"
       - "traefik.docker.network=web"
 #      - "traefik.http.routers.nginx.entrypoints=websecure"
 #      - "traefik.http.routers.nginx.tls.certresolver=myresolver"
     depends_on:
       - backend
-    container_name: project_nginx
+    container_name: blog_nginx
     networks:
       - web
       - internal
@@ -25,9 +25,10 @@ services:
       dockerfile: _docker/app/Dockerfile
     volumes:
       - ./blog-laravel:/var/www:delegated
+      - ./blog-laravel/_docker/php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
       - db
-    container_name: project_app
+    container_name: blog_backend
     networks:
       - web
 
@@ -38,7 +39,7 @@ services:
     volumes:
       - ./blog-vue:/var/www:delegated
     labels:
-      - "traefik.http.routers.frontend.rule=Host(`app.localhost`)"
+      - "traefik.http.routers.frontend.rule=Host(`testdomain.ru`)"
       - "traefik.docker.network=web"
     container_name: blog_frontend
     networks:
@@ -55,7 +56,7 @@ services:
     ports:
       - "3306:3306"
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
-    container_name: project_db
+    container_name: blog_db
     networks:
       - internal
       - web

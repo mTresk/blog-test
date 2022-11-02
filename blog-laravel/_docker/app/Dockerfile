@@ -4,19 +4,22 @@ RUN apt-get update && apt-get install -y \
       apt-utils \
       libpq-dev \
       libpng-dev \
+      libwebp-dev \
+      libjpeg-dev \
       libzip-dev \
       zip unzip \
       nano \
       git && \
       docker-php-ext-install pdo_mysql && \
       docker-php-ext-install bcmath && \
-      docker-php-ext-install gd && \
       docker-php-ext-install exif && \
       docker-php-ext-install zip && \
+      docker-php-ext-configure gd \
+        --with-webp  \
+        --with-jpeg && \
+      docker-php-ext-install gd && \
       apt-get clean && \
-      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-COPY ./_docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 
 # Install composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
