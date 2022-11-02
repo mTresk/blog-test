@@ -41,6 +41,8 @@ services:
     labels:
       - "traefik.http.routers.frontend.rule=Host(`testdomain.ru`)"
       - "traefik.docker.network=web"
+#      - "traefik.http.routers.frontend.entrypoints=websecure"
+#      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
     container_name: blog_frontend
     networks:
         - web
