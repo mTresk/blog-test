@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
         --with-jpeg && \
       docker-php-ext-install gd && \
       apt-get clean && \
-      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
