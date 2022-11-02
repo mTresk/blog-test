@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  traefik:
+    image: traefik:latest
+    command:
+    - --api.insecure=true
+    - --providers.docker=true
+#    - --entrypoints.websecure.address=:443
+#    - --entrypoints.web.address=:80
+#    - --entrypoints.web.http.redirections.entryPoint.to=websecure
+#    - --entrypoints.web.http.redirections.entryPoint.scheme=https
+#    - --entrypoints.web.http.redirections.entrypoint.permanent=true
+#    - --certificatesresolvers.myresolver.acme.tlschallenge=true
+#    - --certificatesresolvers.myresolver.acme.email=djtresk@gmail.com
+#    - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+    labels:
+      - "traefik.docker.network=web"
+    networks:
+      - web
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+    container_name: traefik-proxy
+
+networks:
+  web:
+    external: true
